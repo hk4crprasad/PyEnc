@@ -65,12 +65,22 @@ def logout():
 # Python Version Banner
 def banner():
     version = str(sys.version_info[:3][0]) + "." + str(sys.version_info[:3][1]) + "." + str(sys.version_info[:3][2])
+    script_version = get_script_version()
     print("\033[1;35m-" * int(columns))
     if (sys.version_info[:3][0] < 3):
         print("\033[1;36m\t\tPython Version : \033[1;37m" + version)
     else:
-        print(("\033[1;36mPython Version : \033[1;37m" + version).center(columns + 10))
+        print(("\033[1;36mPython Version : \033[1;37m" + version + " | Script Version : \033[1;37m" + script_version).center(columns + 10))
     print("\033[1;35m-" * int(columns))
+
+# Get Script Version
+def get_script_version():
+    response = requests.get("https://raw.githubusercontent.com/hk4crprasad/PyEnc/refs/heads/main/.version")
+    if response.status_code == 200:
+        version_info = response.text.splitlines()
+        return version_info[2].strip()
+    else:
+        return "Unknown"
 
 # Flush Print
 def psb(z):
@@ -90,7 +100,7 @@ def verInput(data):
 
 # Update Function
 def update():
-    response = requests.get("https://raw.githubusercontent.com/hk4crprasad/PyEncryptor/refs/heads/main/.version")
+    response = requests.get("https://raw.githubusercontent.com/hk4crprasad/PyEnc/refs/heads/main/.version")
     if response.status_code == 200:
         version_info = response.text.splitlines()
         author = version_info[0].strip()
@@ -100,10 +110,10 @@ def update():
 
         print(f"\n{author}\n{coder}\n{version}\n{github}\n")
 
-        current_version = "3.0"  # Current version of the tool
+        current_version = "1.0.0"  # Current version of the tool
         if version != current_version:
             print("Updating to the latest version...")
-            update_response = requests.get("https://raw.githubusercontent.com/hk4crprasad/PyEncryptor/refs/heads/main/PyEnc.py")
+            update_response = requests.get("https://raw.githubusercontent.com/hk4crprasad/PyEnc/refs/heads/main/PyEnc.py")
             if update_response.status_code == 200:
                 with open("new.py", "w") as f:
                     f.write(update_response.text)
@@ -351,7 +361,7 @@ def downloadFileFromMongo():
 
 # Return to Main Menu
 def returnToMainMenu():
-    psb("\n\033[1;36m    [\033[1;37m*\033[1;36m]\033[1;37m Press Enter to return to Main Menu...\033[1;37m")
+    psb("\n\033[1;36m    [\033[1;37m*\\033[1;36m]\033[1;37m Press Enter to return to Main Menu...\033[1;37m")
     input()
     logo()
     banner()
