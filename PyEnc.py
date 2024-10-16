@@ -110,7 +110,7 @@ def update():
 
         print(f"\n{author}\n{coder}\n{version}\n{github}\n")
 
-        current_version = "1.0.0"  # Current version of the tool
+        current_version = "1.0.1"  # Current version of the tool
         if version != current_version:
             print("Updating to the latest version...")
             update_response = requests.get("https://raw.githubusercontent.com/hk4crprasad/PyEnc/refs/heads/main/PyEnc.py")
